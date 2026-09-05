@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>د سکرین د شریکولو خدمت</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background: #f4f4f4; direction: rtl; }
+        .btn { padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+    <!-- د عامه سرور کتابتون -->
+    <script src="https://cloudflare.com"></script>
+</head>
+<body>
+
+    <h2>د ژوندۍ مرستې سیسټم</h2>
+    <p>د لاندې شنه تڼۍ په کلیک کولو سره د سکرین د شیر کولو اجازه ورکړئ:</p>
+    <button class="btn" id="startBtn">سکرین شریک کړئ</button>
+
+    <script>
+        // د ارتباط پیلول د یو عامه او وړیا ID په واسطه
+        const peer = new Peer('my-secret-screen-stream-id-12345'); 
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            try {
+                // په رسمي ډول له براوزر څخه د سکرین د پرمیژن غوښتنه
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+                
+                peer.on('call', (call) => {
+                    call.answer(stream);
+                });
+                
+                alert("پرمیژن ورکړل شو. اوس خپل بل موبایل کې د لیدلو پاڼه خلاصه کړئ.");
+            } catch (err) {
+                alert("اجازه ورنکړل شوه او یا ستاسو براوزر ملاتړ نه کوي.");
+            }
+        });
+    </script>
+</body>
+</html>
