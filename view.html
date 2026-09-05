@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>د سکرین لیدنه</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: white; padding: 20px; }
+        video { width: 100%; max-width: 600px; border: 3px solid #007bff; background: #000; border-radius: 8px; }
+        .btn { padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    </style>
+    <script src="https://cloudflare.com"></script>
+</head>
+<body>
+
+    <h2>د مقابل لوري ژوندی سکرین</h2>
+    <button class="btn" id="connectBtn">سکرین وگورئ</button>
+    <br><br>
+    <video id="remoteVideo" autoplay playsinline controls></video>
+
+    <script>
+        const peer = new Peer();
+        const video = document.getElementById('remoteVideo');
+
+        document.getElementById('connectBtn').addEventListener('click', () => {
+            // له مقابل لوري سره د نښلېدو هڅه
+            const call = peer.call('my-secret-screen-stream-id-12345', new MediaStream());
+            
+            call.on('stream', (remoteStream) => {
+                video.srcObject = remoteStream;
+            });
+        });
+    </script>
+</body>
+</html>
